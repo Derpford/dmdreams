@@ -3,5 +3,6 @@
 #include "decorate/fist.decorate"
 #include "decorate/saw.decorate"
 #include "decorate/smg.decorate"
+#include "decorate/ssg.decorate"
 #include "decorate/shotgun.decorate"
 #include "decorate/howitzer.decorate"

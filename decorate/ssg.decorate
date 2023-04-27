@@ -1,0 +1,60 @@
+Actor DMSuperShotty : DMWeapon replaces SuperShotgun {
+    Weapon.SlotNumber 3
+    Weapon.AmmoType "Shell"
+    Weapon.AmmoUse 2
+    +WEAPON.MELEEWEAPON // Practically melee, anyway...
+
+    states {
+        Ready:
+            SHT2 A 1 A_WeaponReady
+            Loop
+        
+        Fire:
+            SHT2 A 7 {
+                A_FireProjectile("DMDragonBreath");
+                A_StartSound("weapons/sshotf");
+                A_GunFlash;
+            }
+            SHT2 B 7
+            SHT2 C 6 A_CheckReload
+            SHT2 D 6 A_OpenShotgun2
+            SHT2 E 6
+            SHT2 F 7 A_LoadShotgun2
+            SHT2 G 6
+            SHT2 H 6 A_CloseShotgun2
+            SHT2 A 6 A_Refire // heheh, 666 >:)
+            Goto Ready
+
+        Flash:
+            SHT2 I 3 Bright A_Light1
+            SHT2 J 2 Bright A_Light2
+            Stop
+
+        Spawn:
+            SGN2 A -1
+            Stop
+    }
+}
+
+Actor DMDragonBreath {
+    // Instantly explodes for 240 damage.
+    RenderStyle "Add"
+    +BRIGHT
+    +THRUACTORS
+    PROJECTILE
+    Speed 35
+    Radius 128
+    Height 20
+
+    Obituary "%k gave %o a close look at %p boomstick."
+
+    States {
+        Spawn:
+            MISL B 1
+            MISL B 2 A_Explode(240,128,0) // Does not hurt source!
+        Death:
+            MISL C 3
+            MISL D 4
+            Stop
+    }
+}
