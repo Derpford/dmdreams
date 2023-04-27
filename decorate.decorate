@@ -2,3 +2,4 @@
 #include "decorate/weapon.decorate"
 #include "decorate/fist.decorate"
 #include "decorate/smg.decorate"
+#include "decorate/shotgun.decorate"

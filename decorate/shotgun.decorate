@@ -1,0 +1,89 @@
+Actor DMShotgun : DMWeapon replaces Shotgun {
+    // Fires a perfectly-accurate, high-speed blast that splits into 2 smaller blasts on impact.
+    Weapon.SlotNumber 3
+    Weapon.AmmoType "Shell"
+    Weapon.AmmoUse 1
+    Weapon.AmmoGive 8
+
+    states {
+        Ready:
+            SHTG A 1 A_WeaponReady
+            Loop
+
+        Fire:
+            SHTG A 7 {
+                A_FireProjectile("DMShotSlug");
+                A_StartSound("weapons/shotgf");
+                A_GunFlash;
+            }
+            SHTG B 4
+            SHTG C 3
+            SHTG D 6
+            SHTG C 4
+            SHTG B 4
+            SHTG A 6 A_Refire
+            Goto Ready
+        
+        Flash:
+            SHTF A 3 Bright A_Light1
+            SHTF B 2 Bright A_Light2
+            Stop
+
+        Spawn:
+            SHOT A -1
+            Stop
+    }
+}
+
+Actor DMShotSlug : FastProjectile {
+    PROJECTILE
+    Damage (Random(2,4)*10)
+    Speed 120
+    MissileType "DMFireTrail"
+    MissileHeight 8
+    Scale 0.5
+    Radius 4
+    Height 4
+
+    states {
+        Spawn:
+            BAL1 AB 4 Bright
+            Loop
+        Death:
+            BAL1 C 4 Bright {
+                A_SpawnItemEX("DMSlugMini",-4,0,0,6,-3,0,0,SXF_TRANSFERPOINTERS);
+                A_SpawnItemEX("DMSlugMini",-4,0,0,6,3,0,0,SXF_TRANSFERPOINTERS);
+            }
+            BAL1 DE 5 Bright
+            Stop
+    }
+}
+
+Actor DMFireTrail {
+    +NOINTERACTION
+    RenderStyle "Add"
+    Scale 0.2
+
+    states {
+        Spawn:
+            BAL1 ABCDE 2 Bright
+            Stop
+    }
+}
+
+Actor DMSlugMini {
+    PROJECTILE
+    Damage (Random(2,4)*5)
+    Speed 3
+    Radius 4
+    Height 4
+    Scale 0.3
+
+    states {
+        Spawn:
+            BAL1 AB 5 Bright
+        Death:
+            BAL1 CDE 5 Bright
+            Stop
+    }
+}
