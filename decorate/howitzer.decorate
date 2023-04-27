@@ -1,0 +1,56 @@
+Actor DMHowitzer : DMWeapon replaces RocketLauncher {
+    // Fires extra fast rocket shells that deal concentrated damage.
+    Weapon.AmmoType "RocketAmmo"
+    Weapon.AmmoUse 1
+    Weapon.AmmoGive 2
+    Weapon.SlotNumber 5
+    +WEAPON.EXPLOSIVE
+
+    states {
+        Ready:
+            MISG A 1 A_WeaponReady
+            Loop
+        
+        Fire:
+            MISG B 8 {
+                A_GunFlash;
+                A_FireProjectile("DMHowitzerShot");
+                A_StartSound("weapons/rocklf");
+            }
+            MISG B 8
+            MISG A 10 
+            Goto Ready
+
+        Flash:
+            MISF A 2 Bright A_Light1
+            MISF B 3 Bright
+            MISF C 4 Bright A_Light2
+            MISF D 3 Bright
+            Goto LightDone
+        
+        Spawn:
+            LAUN A -1
+            Stop
+    }
+}
+
+Actor DMHowitzerShot : FastProjectile {
+    Damage (Random(10,20) * 10)
+    Radius 6
+    Height 6
+    Speed 100
+    Scale 0.8
+    MissileType "DMFireTrail"
+    MissileHeight 12
+
+    states {
+        Spawn:
+            MISL A 1 Bright
+            Loop
+        Death:
+            MISL B 6 Bright A_Explode(80)
+            MISL C 5 Bright
+            MISL D 4 Bright
+            Stop
+    }
+}
