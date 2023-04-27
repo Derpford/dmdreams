@@ -2,6 +2,7 @@ Actor DMSuperShotty : DMWeapon replaces SuperShotgun {
     Weapon.SlotNumber 3
     Weapon.AmmoType "Shell"
     Weapon.AmmoUse 2
+    Weapon.AmmoGive 8
     +WEAPON.MELEEWEAPON // Practically melee, anyway...
 
     states {
