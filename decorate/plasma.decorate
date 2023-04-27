@@ -40,7 +40,10 @@ Actor DMPlasmaSmall {
         Spawn:
             PLSS AB 4 Bright
         Death:
-            PLSE A 1 Bright A_SpawnItemEX("DMPlasmaBig",0,0,0,1,0,0,0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED)
+            PLSE A 1 Bright {
+                A_SpawnItemEX("DMPlasmaSplit",0,10,0,1,0,0,0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED);
+                A_SpawnItemEX("DMPlasmaSplit",0,-10,0,1,0,0,0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED);
+            }
             PLSE BCDE 1 Bright
             Stop
         
@@ -50,14 +53,14 @@ Actor DMPlasmaSmall {
     }
 }
 
-Actor DMPlasmaBig {
-    Damage (Random(12,18) * 2)
-    Radius 20
-    Height 12
+Actor DMPlasmaSplit {
+    Damage (Random(6,9) * 2)
+    Radius 12
+    Height 8
     Speed 40
     RenderStyle "Add"
     PROJECTILE
-    Scale 1.5
+    Scale 0.8
 
     Obituary "%k brought the thunder to %o."
     
