@@ -1,0 +1,5 @@
+Actor DMDreamPlayer : DoomPlayer {
+    Player.StartItem "Clip" 100
+    Player.StartItem "DMFist"
+    Player.StartItem "DMMachPistol"
+}

@@ -1,0 +1,36 @@
+Actor DMFist : DMWeapon replaces Fist {
+    // Deals 25 to 200 damage, and also launches the target.
+    Weapon.SlotNumber 1
+    states {
+        Ready:
+            PUNG A 1 A_WeaponReady
+            Loop
+
+        Fire:
+            PUNG B 2 A_StartSound("skeleton/swing",CHAN_WEAPON)
+            PUNG C 3 A_CustomPunch(25,false,0,"Fistipuff",80,0,0,0,"*fist")
+            PUNG D 5
+            PUNG C 3
+            PUNG B 2 A_Refire
+            Goto Ready
+    }
+}
+
+Actor Fistipuff : BulletPuff {
+    +PUFFGETSOWNER
+    +HITTRACER
+    +PUFFONACTORS
+    states {
+        Melee:
+            PUFF C 0 {
+                A_ChangeVelocity(0,0,8,0,AAPTR_TRACER);
+                A_GiveToTarget("FistipuffActivate");
+            }
+            PUFF CD 4
+            Stop
+    }
+}
+
+Actor FistipuffActivate : Inventory {
+
+}
