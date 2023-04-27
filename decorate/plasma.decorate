@@ -1,0 +1,73 @@
+Actor DMPlasmaThrower : DMWeapon replaces PlasmaRifle {
+    Weapon.SlotNumber 6
+    Weapon.AmmoType "Cell"
+    Weapon.AmmoUse 1
+    Weapon.AmmoGive 40
+
+    States {
+        Ready:
+            PLSG A 1 A_WeaponReady
+            Loop
+        
+        Fire:
+            PLSG A 4 {
+                A_FireProjectile("DMPlasmaSmall");
+                A_StartSound("weapons/plasmaf");
+                A_GunFlash;
+            }
+            PLSG B 20 A_Refire
+            Goto Ready
+        
+        Flash:
+            PLSF AB Random(1,4) Bright A_Light1
+            Stop
+    }
+}
+
+Actor DMPlasmaSmall {
+    Damage (Random(8,12) * 2)
+    Radius 12
+    Height 8
+    Speed 16
+    RenderStyle "Add"
+    Alpha 0.75
+    Scale 0.5
+    PROJECTILE
+
+    Obituary "%k tickled %o to death with close-range plasma."
+
+    States {
+        Spawn:
+            PLSS AB 4 Bright
+        Death:
+            PLSE A 1 Bright A_SpawnItemEX("DMPlasmaBig",0,0,0,1,0,0,0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED)
+            PLSE BCDE 1 Bright
+            Stop
+        
+        XDeath:
+            PLSE ABCDE 4 Bright
+            Stop
+    }
+}
+
+Actor DMPlasmaBig {
+    Damage (Random(12,18) * 2)
+    Radius 20
+    Height 12
+    Speed 40
+    RenderStyle "Add"
+    PROJECTILE
+    Scale 1.5
+
+    Obituary "%k brought the thunder to %o."
+    
+    States {
+        Spawn:
+            PLSS AB 5 Bright
+            Loop
+        
+        Death:
+            PLSE ABCDE 3 Bright
+            Stop
+    }
+}

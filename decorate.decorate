@@ -12,3 +12,4 @@
 // rocket
 #include "decorate/howitzer.decorate"
 // energy
+#include "decorate/plasma.decorate"
