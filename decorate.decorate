@@ -1,6 +1,7 @@
 #include "decorate/player.decorate"
 #include "decorate/weapon.decorate"
 #include "decorate/fist.decorate"
+#include "decorate/saw.decorate"
 #include "decorate/smg.decorate"
 #include "decorate/shotgun.decorate"
 #include "decorate/howitzer.decorate"

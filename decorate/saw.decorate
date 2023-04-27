@@ -1,0 +1,26 @@
+Actor DMSaw : DMWeapon replaces Chainsaw {
+    Weapon.Kickback 0
+    Weapon.SlotNumber 1
+    Weapon.UpSound "weapons/sawup"
+    Weapon.ReadySound "weapons/sawidle"
+    +WEAPON.MELEEWEAPON
+    Obituary "%k sawed the %o."
+
+    states {
+        Ready:
+            SAWG CD 3 A_WeaponReady
+            Loop
+        
+        Fire:
+            SAWG ABABABAB 2 {
+                A_ChangeVelocity(6,0,0,CVF_RELATIVE);
+                A_CustomPunch(32,false,CPF_PULLIN,"BulletPuff",64,0,0,0,"weapons/sawhit","weapons/sawfull");
+            }
+            SAWG A 35 A_StartSound("weapons/sawidle",CHAN_WEAPON)
+            Goto Ready
+
+        Spawn:
+            CSAW A -1
+            Stop
+    }
+}
