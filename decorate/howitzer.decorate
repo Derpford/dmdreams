@@ -43,6 +43,8 @@ Actor DMHowitzerShot : FastProjectile {
     MissileType "DMFireTrail"
     MissileHeight 12
 
+    Obituary "%k sniped %o with the Howitzer."
+
     states {
         Spawn:
             MISL A 1 Bright

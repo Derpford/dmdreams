@@ -45,6 +45,8 @@ Actor DMShotSlug : FastProjectile {
     Radius 4
     Height 4
 
+    Obituary "%k slugged %o with a slug shotgun."
+
     states {
         Spawn:
             BAL1 AB 4 Bright
@@ -78,6 +80,8 @@ Actor DMSlugMini {
     Radius 4
     Height 4
     Scale 0.3
+
+    Obituary "%k got %o with the shrapnel from a slug shotgun."
 
     states {
         Spawn:
