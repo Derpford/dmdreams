@@ -12,7 +12,7 @@ Actor DMSuperShotty : DMWeapon replaces SuperShotgun {
         
         Fire:
             SHT2 A 7 {
-                A_FireProjectile("DMDragonBreath");
+                A_SpawnItemEX("DMDragonBreath",cos(pitch)*64,0,32 - (sin(pitch)*64),0,0,0,0,SXF_SETTARGET);
                 A_StartSound("weapons/sshotf");
                 A_GunFlash;
             }
