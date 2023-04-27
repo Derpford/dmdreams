@@ -2,6 +2,7 @@ Actor DMFist : DMWeapon replaces Fist {
     // Deals 25 to 200 damage, and also launches the target.
     Weapon.SlotNumber 1
     Obituary "%k HUMILIATED %o with fisticuffs."
+    +WEAPON.MELEEWEAPON
     states {
         Ready:
             PUNG A 1 A_WeaponReady
