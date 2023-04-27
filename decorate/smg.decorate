@@ -7,6 +7,8 @@ Actor DMMachPistol : DMWeapon replaces Pistol {
     Tag "Machine Pistol"
 
     Obituary "%k finished %o off with a pistol."
+
+    Inventory.PickupMessage "Machine Pistol!"
     
     states {
         Spawn:

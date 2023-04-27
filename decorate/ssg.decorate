@@ -5,6 +5,8 @@ Actor DMSuperShotty : DMWeapon replaces SuperShotgun {
     Weapon.AmmoGive 8
     +WEAPON.MELEEWEAPON // Practically melee, anyway...
 
+    Inventory.PickupMessage "Super Hellshot!"
+
     states {
         Ready:
             SHT2 A 1 A_WeaponReady

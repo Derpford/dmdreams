@@ -5,6 +5,8 @@ Actor DMShotgun : DMWeapon replaces Shotgun {
     Weapon.AmmoUse 1
     Weapon.AmmoGive 8
 
+    Inventory.PickupMessage "Hellfire Shotgun!"
+
     states {
         Ready:
             SHTG A 1 A_WeaponReady

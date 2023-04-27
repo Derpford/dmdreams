@@ -6,6 +6,8 @@ Actor DMChaingun : DMWeapon replaces Chaingun {
     
     Obituary "%k showed %o %p A-10 Warthog impression."
 
+    Inventory.PickupMessage "Chaingun!"
+
     States {
         Ready:
             CHGG A 1 A_WeaponReady

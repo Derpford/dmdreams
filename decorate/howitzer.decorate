@@ -5,6 +5,7 @@ Actor DMHowitzer : DMWeapon replaces RocketLauncher {
     Weapon.AmmoGive 2
     Weapon.SlotNumber 5
     +WEAPON.EXPLOSIVE
+    Inventory.PickupMessage "Howitzer!"
 
     states {
         Ready:

@@ -4,6 +4,8 @@ Actor DMPlasmaThrower : DMWeapon replaces PlasmaRifle {
     Weapon.AmmoUse 1
     Weapon.AmmoGive 40
 
+    Inventory.PickupMessage "Plasma Thrower!"
+
     States {
         Ready:
             PLSG A 1 A_WeaponReady

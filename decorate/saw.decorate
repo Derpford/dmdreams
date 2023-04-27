@@ -4,7 +4,10 @@ Actor DMSaw : DMWeapon replaces Chainsaw {
     Weapon.UpSound "weapons/sawup"
     Weapon.ReadySound "weapons/sawidle"
     +WEAPON.MELEEWEAPON
+
     Obituary "%k sawed the %o."
+
+    Inventory.PickupMessage "Saw Gauntlet!"
 
     states {
         Ready:
