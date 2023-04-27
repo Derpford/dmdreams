@@ -1,0 +1,32 @@
+Actor DMChaingun : DMWeapon replaces Chaingun {
+    Weapon.SlotNumber 4
+    Weapon.AmmoType "Clip"
+    Weapon.AmmoUse 1
+    Weapon.AmmoGive 20
+    
+    Obituary "%k showed %o %p A-10 Warthog impression."
+
+    States {
+        Ready:
+            CHGG A 1 A_WeaponReady
+            Loop
+        
+        Fire:
+            CHGG B 5 A_StartSound("weapons/sshoto")
+        Hold:
+            CHGG A 1 {
+                A_FireBullets(5,1,1,random(8,12),"BulletPuff",FBF_NORANDOM|FBF_USEAMMO);
+                A_StartSound("weapons/pistol",CHAN_WEAPON);
+                A_GunFlash;
+            }
+            CHGG B 2
+            CHGG A 1 A_Refire
+            CHGG A 4 A_StartSound("weapons/sshotc")
+            Goto Ready
+        
+        Flash:
+            CHGF A 2 Bright A_Light1
+            CHGF B 1 Bright A_Light2
+            Stop
+    }
+}

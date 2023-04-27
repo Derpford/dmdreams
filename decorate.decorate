@@ -1,8 +1,14 @@
 #include "decorate/player.decorate"
 #include "decorate/weapon.decorate"
+// melee
 #include "decorate/fist.decorate"
 #include "decorate/saw.decorate"
+// bullet
 #include "decorate/smg.decorate"
-#include "decorate/ssg.decorate"
+#include "decorate/chaingun.decorate"
+// shotgun
 #include "decorate/shotgun.decorate"
+#include "decorate/ssg.decorate"
+// rocket
 #include "decorate/howitzer.decorate"
+// energy
