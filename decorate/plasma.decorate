@@ -47,8 +47,10 @@ Actor DMPlasmaSmall {
             PLSS AB 4 Bright
         Death:
             PLSE A 1 Bright {
-                A_SpawnItemEX("DMPlasmaSplit",0,10,0,1,0,0,0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED);
-                A_SpawnItemEX("DMPlasmaSplit",0,-10,0,1,0,0,0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED);
+                A_FaceTarget(0,0);
+                // -cos(pitch), 0, sin(pitch) because we want the OPPOSITE direction
+                A_SpawnItemEX("DMPlasmaSplit",0,10,0,-cos(pitch),0,sin(pitch),0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED);
+                A_SpawnItemEX("DMPlasmaSplit",0,-10,0,-cos(pitch),0,sin(pitch),0,SXF_TRANSFERPOINTERS|SXF_MULTIPLYSPEED);
             }
             PLSE BCDE 1 Bright
             Stop
