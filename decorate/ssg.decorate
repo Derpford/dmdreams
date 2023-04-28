@@ -14,7 +14,9 @@ Actor DMSuperShotty : DMWeapon replaces SuperShotgun {
         
         Fire:
             SHT2 A 7 {
-                A_SpawnItemEX("DMDragonBreath",cos(pitch)*64,0,32 - (sin(pitch)*64),0,0,0,0,SXF_SETTARGET);
+                // A_SpawnItemEX("DMDragonBreath",cos(pitch)*64,0,32 - (sin(pitch)*64),0,0,0,0,SXF_SETTARGET);
+                // A_TakeInventory("Shell",2);
+                A_FireProjectile("DMDragonBreath");
                 A_StartSound("weapons/sshotf");
                 A_GunFlash;
             }
@@ -53,9 +55,9 @@ Actor DMDragonBreath {
 
     States {
         Spawn:
+        Death:
             MISL B 1
             MISL B 2 A_Explode(240,128,0) // Does not hurt source!
-        Death:
             MISL C 3
             MISL D 4
             Stop
