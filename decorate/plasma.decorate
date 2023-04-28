@@ -23,6 +23,10 @@ Actor DMPlasmaThrower : DMWeapon replaces PlasmaRifle {
         Flash:
             PLSF AB Random(1,4) Bright A_Light1
             Stop
+        
+        Spawn:
+            PLAS A -1
+            Stop
     }
 }
 
