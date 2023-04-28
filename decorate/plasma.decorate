@@ -47,7 +47,6 @@ Actor DMPlasmaSmall {
             PLSS AB 4 Bright
         Death:
             PLSE A 1 Bright {
-                // -cos(pitch), 0, sin(pitch) because we want the OPPOSITE direction
                 A_SpawnItemEX("DMPlasmaSplit",0,10,0,velx * 2,vely * 2,velz * 2,0,SXF_TRANSFERPOINTERS|SXF_ABSOLUTEVELOCITY);
                 A_SpawnItemEX("DMPlasmaSplit",0,-10,0,velx * 2,vely * 2,velz * 2,0,SXF_TRANSFERPOINTERS|SXF_ABSOLUTEVELOCITY);
             }
@@ -61,7 +60,7 @@ Actor DMPlasmaSmall {
 }
 
 Actor DMPlasmaSplit {
-    Damage (Random(6,9) * 2)
+    Damage (Random(9,12) * 2)
     Radius 12
     Height 8
     Speed 40
