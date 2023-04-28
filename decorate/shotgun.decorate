@@ -55,8 +55,12 @@ Actor DMShotSlug : FastProjectile {
             Loop
         Death:
             BAL1 C 4 Bright {
+                // Forward splits
                 A_SpawnItemEX("DMSlugMini",-4,0,0,6,-3,0,0,SXF_TRANSFERPOINTERS);
                 A_SpawnItemEX("DMSlugMini",-4,0,0,6,3,0,0,SXF_TRANSFERPOINTERS);
+                // Backward splits
+                A_SpawnItemEX("DMSlugMini",4,0,0,-6,-3,0,0,SXF_TRANSFERPOINTERS);
+                A_SpawnItemEX("DMSlugMini",4,0,0,-6,3,0,0,SXF_TRANSFERPOINTERS);
             }
             BAL1 DE 5 Bright
             Stop
