@@ -46,7 +46,8 @@ Actor DMDragonBreath {
     RenderStyle "Add"
     +BRIGHT
     +THRUACTORS
-    PROJECTILE
+    +FORCERADIUSDMG
+    +NOGRAVITY
     Speed 35
     Radius 128
     Height 20
