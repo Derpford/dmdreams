@@ -1,5 +1,5 @@
 Actor DMDreamPlayer : DoomPlayer {
-    Player.StartItem "Clip" 100
+    Player.StartItem "Clip" 50
     Player.StartItem "DMMachPistol"
     Player.StartItem "DMFist"
 }
