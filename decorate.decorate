@@ -1,5 +1,4 @@
 #include "decorate/player.decorate"
-#include "decorate/weapon.decorate"
 // melee
 #include "decorate/fist.decorate"
 #include "decorate/saw.decorate"
@@ -13,3 +12,4 @@
 #include "decorate/howitzer.decorate"
 // energy
 #include "decorate/plasma.decorate"
+// #include "decorate/bfg.decorate"
