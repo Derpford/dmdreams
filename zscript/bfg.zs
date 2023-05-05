@@ -9,6 +9,15 @@ class DMBigGun : DMWeapon replaces BFG9000 {
         Inventory.PickupMessage "Biggest Fraggin' Gun!";
     }
     
+    action void BFGTracer(double ang, bool decay = false) {
+        Name beam = "DMBigBeam";
+        if (decay) {
+            beam = "DMDecayBeam";
+        }
+
+        A_FireProjectile(beam,ang,false);
+        A_FireProjectile(beam,-ang,false);
+    }
 
     States {
         Ready:
@@ -25,25 +34,11 @@ class DMBigGun : DMWeapon replaces BFG9000 {
             }
             BFGG B 10 {
                 A_StartSound("weapons/bfgx",CHAN_WEAPON);
-                A_FireProjectile("DMBigBeam",-45,false);
-                A_FireProjectile("DMBigBeam",-40,false);
-                A_FireProjectile("DMBigBeam",-35,false);
-                A_FireProjectile("DMBigBeam",-30,false);
-                A_FireProjectile("DMBigBeam",-25,false);
-                A_FireProjectile("DMBigBeam",-20,false);
-                A_FireProjectile("DMBigBeam",-15,false);
-                A_FireProjectile("DMBigBeam",-10,false);
-                A_FireProjectile("DMBigBeam",-5,false);
-                A_FireProjectile("DMBigBeam",0);
-                A_FireProjectile("DMBigBeam",45,false);
-                A_FireProjectile("DMBigBeam",40,false);
-                A_FireProjectile("DMBigBeam",35,false);
-                A_FireProjectile("DMBigBeam",30,false);
-                A_FireProjectile("DMBigBeam",25,false);
-                A_FireProjectile("DMBigBeam",20,false);
-                A_FireProjectile("DMBigBeam",15,false);
-                A_FireProjectile("DMBigBeam",10,false);
-                A_FireProjectile("DMBigBeam",5,false);
+                A_FireProjectile("DMBigBeam");
+                for (int i = 0; i < 10; i++) {
+                    BFGTracer(i * 2.5);
+                    BFGTracer(i * 2.5,true);
+                }
             }
             BFGG B 10 A_StartSound("weapons/bfgf");
             BFGG AAAAAAAAAA 2 A_WeaponOffset(Random(-3,3),32,WOF_INTERPOLATE);
@@ -62,7 +57,24 @@ class DMBigGun : DMWeapon replaces BFG9000 {
     }
 }
 
+class DMTestBFG : DMWeapon {
+    States {
+        Ready:
+            BFGG A 1 A_WeaponReady();
+            Loop;
+        Fire:
+            BFGG B 1 A_FireProjectile("DMBigBeam");
+        Hold:
+            BFGG B 1;
+            BFGG B 1 A_Refire();
+            BFGG B 1;
+            Goto Ready;
+    }
+}
+
 class DMBigBeam : Actor { 
+    double tracerad;
+    Property Area : tracerad;
     Array<Actor> hits;
     Array<Actor> processed;
     Default {
@@ -71,6 +83,8 @@ class DMBigBeam : Actor {
         +THRUACTORS;
         RenderStyle "Add";
         // Damage (100);
+        Radius 2;
+        DMBigBeam.Area 32;
         Speed 30;
     }
 
@@ -82,7 +96,7 @@ class DMBigBeam : Actor {
             if (!mo.bSHOOTABLE) {continue;}
             if (mo == target) {continue;}
             double dist = invoker.Vec2To(mo).length()-mo.radius;
-            if (dist > 64) {continue;}
+            if (dist > invoker.tracerad) {continue;}
             if (invoker.processed.size() > 0 && invoker.processed.Find(mo) != invoker.processed.size()) {continue;}
             if (invoker.hits.size() > 0 && invoker.hits.Find(mo) != invoker.hits.size()) {continue;}
 
@@ -99,9 +113,12 @@ class DMBigBeam : Actor {
         }
     }
 
-    action void DoBFGTrace() {
-        invoker.FindHits();
-        invoker.DamageHits();
+    void SpawnFX(double spd = 32) {
+        double spread = tracerad + frandom(-2,2);
+        A_SpawnItemEX("DMBeamFX",0,-spread,ceilingz - 8,0,0,-spd,0,SXF_TRANSFERPOINTERS);
+        A_SpawnItemEX("DMBeamFX",0,spread,ceilingz - 8,0,0,-spd,0,SXF_TRANSFERPOINTERS);
+        A_SpawnItemEX("DMBeamFX",0,-spread,0,0,0,spd,0,SXF_TRANSFERPOINTERS);
+        A_SpawnItemEX("DMBeamFX",0,spread,0,0,0,spd,0,SXF_TRANSFERPOINTERS);
     }
 
     states {
@@ -109,13 +126,7 @@ class DMBigBeam : Actor {
             BFS1 A 0;
             BFS1 AABB 1 Bright {
                 FindHits();
-                A_SpawnItemEX("DMBeamFX",0,frandom(-8,8),ceilingz - 8,1,0,-32,0,SXF_TRANSFERPOINTERS);
-                A_SpawnItemEX("DMBeamFX",0,frandom(-8,8),0,1,0,32,0,SXF_TRANSFERPOINTERS);
-                // A_SpawnItemEX("DMBeamFX",16,0,8,0,0,8);
-                // A_SpawnItemEX("DMBeamFX",0,32,8,0,0,16);
-                // A_SpawnItemEX("DMBeamFX",0,0,8,0,0,24);
-                // A_SpawnItemEX("DMBeamFX",0,-32,8,0,0,16);
-                // A_SpawnItemEX("DMBeamFX",-16,0,8,0,0,32);
+                SpawnFX();
             }
             BFS1 A 0 DamageHits();
             Loop;
@@ -123,6 +134,27 @@ class DMBigBeam : Actor {
         Death:
             BFE1 ABCDEF 6 Bright;
             Stop;
+    }
+}
+
+class DMDecayBeam : DMBigBeam {
+
+    states {
+        Spawn:
+            BFS1 A 0;
+            BFS1 AABB 1 Bright {
+                FindHits();
+                Vector3 ovel = invoker.vel;
+                double spd = max(0,ovel.length()-0.5);
+                if (spd == 0) {
+                    return ResolveState("Death");
+                }
+                invoker.vel = ovel.unit() * spd;
+                return ResolveState(null);
+            }
+            BFS1 A 0 DamageHits();
+            BFS1 A 0 SpawnFX(8);
+            Loop;
     }
 }
 
